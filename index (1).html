@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elliott Reichardt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lora:ital,wght@0,400;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f2ede4;
+      --cream-dark: #e8e0d3;
+      --earth: #2c2416;
+      --earth-mid: #5a4a32;
+      --sienna: #9b4f2a;
+      --sienna-light: #c07a50;
+      --ochre: #c8962e;
+      --forest: #2d4a3e;
+      --parchment: #ede7da;
+      --mono: 'DM Mono', monospace;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body: 'Lora', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--earth);
+      font-family: var(--body);
+      font-size: 17px;
+      line-height: 1.8;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* grain */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 1000;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 1.25rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-mark {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--earth-mid);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--earth-mid);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--sienna);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .nav-links a:hover { color: var(--sienna); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .hamburger { display: none; background: none; border: none; cursor: crosshair; flex-direction: column; gap: 4px; }
+    .hamburger span { display: block; width: 20px; height: 1px; background: var(--earth); }
+
+    /* ── HERO ── */
+    .hero-main {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      min-height: 100vh;
+    }
+
+    .hero-left {
+      padding: 8rem 3rem 4rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--sienna);
+    }
+
+    .hero-name {
+      font-family: var(--display);
+      font-size: clamp(4rem, 7vw, 7rem);
+      font-weight: 300;
+      line-height: 0.95;
+      color: var(--earth);
+      margin-bottom: 2.5rem;
+      letter-spacing: -0.01em;
+    }
+    .hero-name em { font-style: italic; color: var(--sienna); }
+
+    .hero-descriptor {
+      max-width: 380px;
+      font-size: 1rem;
+      color: var(--earth-mid);
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions { display: flex; gap: 1.25rem; align-items: center; }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--earth);
+      text-decoration: none;
+      border: 1px solid var(--earth-mid);
+      padding: 0.7rem 1.5rem;
+      transition: all 0.25s;
+      cursor: crosshair;
+    }
+    .btn-ghost:hover { background: var(--earth); color: var(--cream); border-color: var(--earth); }
+
+    .btn-text {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+    .btn-text:hover { gap: 0.85rem; }
+
+    .hero-coords {
+      position: absolute;
+      bottom: 2rem; left: 4rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--earth-mid);
+      opacity: 0.5;
+    }
+
+    .crossmark {
+      position: absolute;
+      width: 16px; height: 16px;
+    }
+    .crossmark::before, .crossmark::after {
+      content: ''; position: absolute;
+      background: var(--sienna); opacity: 0.2;
+    }
+    .crossmark::before { width: 1px; height: 100%; left: 50%; top: 0; }
+    .crossmark::after { width: 100%; height: 1px; top: 50%; left: 0; }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--parchment);
+    }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: sepia(15%) contrast(1.05);
+      mix-blend-mode: multiply;
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(135deg, var(--parchment) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--earth);
+      color: var(--cream);
+      padding: 0.65rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-flex; gap: 4rem;
+      animation: ticker 28s linear infinite;
+    }
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+    .ticker-sep { color: var(--ochre); opacity: 1 !important; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 7rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 6rem;
+      align-items: start;
+      position: relative;
+    }
+    #about::before {
+      content: '"field notes"';
+      position: absolute;
+      top: 3rem; right: 4rem;
+      font-family: var(--display);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--earth);
+      opacity: 0.1;
+      letter-spacing: 0.04em;
+    }
+
+    .about-left { position: sticky; top: 6rem; }
+
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--sienna);
+      margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-num::after { content: ''; display: block; width: 24px; height: 1px; background: var(--sienna); }
+
+    .section-heading {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300;
+      line-height: 1.05;
+      font-style: italic;
+      color: var(--earth);
+    }
+
+    .about-tag {
+      display: inline-block;
+      margin-top: 1.25rem;
+      margin-right: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--earth-mid);
+      border: 1px solid var(--cream-dark);
+      padding: 0.25rem 0.65rem;
+    }
+
+    .about-right p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+      margin-bottom: 1.25rem;
+    }
+    .about-right p:first-child {
+      font-family: var(--display);
+      font-size: 1.35rem;
+      font-weight: 300;
+      color: var(--earth);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ── RESEARCH ── */
+    #research {
+      background: var(--earth);
+      color: var(--cream);
+      padding: 7rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #research::after {
+      content: 'RESEARCH';
+      position: absolute;
+      bottom: -1rem; right: -0.5rem;
+      font-family: var(--display);
+      font-size: 12rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.025);
+      line-height: 1;
+      pointer-events: none;
+      letter-spacing: -0.03em;
+    }
+    #research .section-num { color: var(--ochre); }
+    #research .section-num::after { background: var(--ochre); }
+    #research .section-heading { color: var(--cream); }
+
+    .research-header { margin-bottom: 4rem; }
+    .research-intro {
+      margin-top: 1.5rem;
+      max-width: 560px;
+      font-size: 1rem;
+      color: rgba(242,237,228,0.55);
+      font-style: italic;
+    }
+
+    .research-items { display: grid; grid-template-columns: 1fr 1fr; }
+
+    .research-item {
+      border: 1px solid rgba(242,237,228,0.1);
+      padding: 2.5rem;
+      transition: background 0.3s;
+    }
+    .research-item:hover { background: rgba(242,237,228,0.04); }
+
+    .research-item-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--ochre);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.25rem;
+      opacity: 0.8;
+    }
+    .research-item h3 {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.3;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .research-item p {
+      font-size: 0.9rem;
+      color: rgba(242,237,228,0.5);
+      line-height: 1.75;
+    }
+
+    /* ── PUBLICATIONS ── */
+    #publications {
+      padding: 7rem 4rem;
+      background: var(--parchment);
+    }
+    .pub-header { margin-bottom: 4rem; }
+
+    .pub-entry {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--cream-dark);
+      align-items: start;
+    }
+    .pub-entry:last-of-type { border-bottom: 1px solid var(--cream-dark); }
+    .pub-entry:hover .pub-title-text { color: var(--sienna); }
+
+    .pub-date {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--sienna);
+      padding-top: 0.4rem;
+      text-align: right;
+    }
+    .pub-title-text {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-style: italic;
+      line-height: 1.35;
+      color: var(--earth);
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+    .pub-venue {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--earth-mid);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pub-award-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      border: 1px solid var(--ochre);
+      padding: 0.2rem 0.6rem;
+    }
+
+    /* ── CV ── */
+    #cv {
+      background: var(--sienna);
+      padding: 5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 3rem;
+    }
+    #cv .section-num { color: rgba(242,237,228,0.5); }
+    #cv .section-num::after { background: rgba(242,237,228,0.3); }
+    .cv-title {
+      font-family: var(--display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-top: 0.5rem;
+    }
+    .cv-sub {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: rgba(242,237,228,0.55);
+      letter-spacing: 0.1em;
+      margin-top: 0.75rem;
+    }
+    .btn-cv {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      background: var(--cream);
+      text-decoration: none;
+      padding: 1rem 2rem;
+      white-space: nowrap;
+      transition: all 0.25s;
+      cursor: crosshair;
+    }
+    .btn-cv:hover { background: var(--earth); color: var(--cream); }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 7rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .contact-heading {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.05;
+      color: var(--earth);
+      margin-top: 0.75rem;
+    }
+    .contact-right { padding-top: 1rem; }
+    .contact-right p {
+      font-size: 0.97rem;
+      color: var(--earth-mid);
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+    }
+    .contact-line {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+    .contact-line-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      margin-bottom: 0.35rem;
+    }
+    .contact-line-value {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--earth);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--earth);
+      color: rgba(242,237,228,0.3);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.up { opacity: 1; transform: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--earth); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; z-index: 400; }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.85rem; color: var(--cream); }
+      .hamburger { display: flex; }
+
+      .hero-main { grid-template-columns: 1fr; }
+      .hero-right { height: 55vw; }
+      .hero-left { padding: 2rem 1.5rem 3rem; }
+      .hero-coords { left: 1.5rem; }
+
+      #about, #contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2.5rem; }
+      .about-left { position: static; }
+
+      #research { padding: 4rem 1.5rem; }
+      .research-items { grid-template-columns: 1fr; }
+
+      #publications { padding: 4rem 1.5rem; }
+      .pub-entry { grid-template-columns: 48px 1fr; gap: 1rem; }
+
+      #cv { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#home" class="nav-mark">E. Reichardt</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-main">
+      <div class="hero-left">
+        <div class="crossmark" style="top:8rem;right:3rem;"></div>
+        <div class="crossmark" style="bottom:10rem;left:2.5rem;"></div>
+        <p class="hero-eyebrow">PhD Candidate · Stanford University</p>
+        <h1 class="hero-name">Elliott<br><em>Reichardt</em></h1>
+        <p class="hero-descriptor">Sociocultural &amp; environmental anthropologist. Politics of land, health, and resource extraction in northern British Columbia.</p>
+        <div class="hero-actions">
+          <a href="#research" class="btn-ghost">View Research</a>
+          <a href="#publications" class="btn-text">Publications →</a>
+        </div>
+        <p class="hero-coords">49°52′N 124°31′W — Nak'azdli Territory</p>
+      </div>
+      <div class="hero-right">
+        <img src="https://elliottreichardt.com/wp-content/uploads/2024/11/dscf1666.jpg" alt="Elliott Reichardt in the field" />
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item">Indigenous Governance</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Environmental Anthropology</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Nak'azdli Whut'en</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Reconciliation Capitalism</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Northern British Columbia</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Political Economy</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Dakelh First Nations</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Ethnographic Fieldwork</span><span class="ticker-sep"> ✦ </span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Indigenous Governance</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Environmental Anthropology</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Nak'azdli Whut'en</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Reconciliation Capitalism</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Northern British Columbia</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Political Economy</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Dakelh First Nations</span><span class="ticker-sep"> ✦ </span>
+      <span class="ticker-item">Ethnographic Fieldwork</span><span class="ticker-sep"> ✦ </span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-left reveal">
+      <p class="section-num">01</p>
+      <h2 class="section-heading">About<br>the Work</h2>
+      <div style="margin-top:2rem;">
+        <span class="about-tag">Environmental Anthropology</span>
+        <span class="about-tag">Indigenous Studies</span>
+        <span class="about-tag">Political Economy</span>
+        <span class="about-tag">Medical History</span>
+      </div>
+    </div>
+    <div class="about-right reveal">
+      <p>I am a sociocultural and environmental anthropologist who studies the politics of land, health, and resource extraction in northern British Columbia — working alongside Dakelh First Nations communities to understand how Indigenous governance operates in the aftermath of industrial forestry.</p>
+      <p>My doctoral research focuses on the Nak'azdli Whut'en and Binche Whut'en peoples. Through sixteen months of ethnographic fieldwork with logging companies, hunters, elders, and forestry officials — complemented by archival, oral-historical, and GIS analyses — I trace how forestry transformed Dakelh forests into "log lands."</p>
+      <p>Working in genuine partnership with these communities, I co-designed the research questions, established oversight committees, and return annually to maintain accountability and reciprocity. Since 2023 I have also helped coordinate the Binche Dakelh science summer camp.</p>
+      <p>My broader scholarly interests span environmental anthropology, Indigenous sovereignty, colonial law, public health, race, and eugenics. Earlier I trained as a biomedical researcher, studying immunology and cancer.</p>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="research-header reveal">
+      <p class="section-num">02</p>
+      <h2 class="section-heading">Research</h2>
+      <p class="research-intro">Current and ongoing projects at the intersection of Indigenous resurgence, settler-colonial governance, and resource capitalism in the Canadian North.</p>
+    </div>
+    <div class="research-items">
+      <div class="research-item reveal">
+        <p class="research-item-num">Project 01</p>
+        <h3>The Second Growth</h3>
+        <p>Book project examining Indigenous resurgence, settler adaptation, and the possibility of repair in the log lands of the Canadian North. Traces how forestry transformed Dakelh forests and how First Nations leaders negotiate authority over these landscapes.</p>
+      </div>
+      <div class="research-item reveal">
+        <p class="research-item-num">Project 02</p>
+        <h3>Legitimacy Without Liberalism</h3>
+        <p>Dissertation chapter examining how the Nak'azdli Whut'en govern mixed Indigenous-settler polities through infrastructure investment — splash parks, public goods, community services — outside liberal consent frameworks.</p>
+      </div>
+      <div class="research-item reveal">
+        <p class="research-item-num">Project 03</p>
+        <h3>Reconciliation Capitalism</h3>
+        <p>Theoretical framework analyzing how "reconciled logging practices" function as a mode of Indigenous resurgence — reclaiming territorial authority through, rather than simply against, resource capitalism. Winner of Harold K. Schneider Prize.</p>
+      </div>
+      <div class="research-item reveal">
+        <p class="research-item-num">Project 04</p>
+        <h3>Colonial Public Health</h3>
+        <p>Historical research on race, eugenics, and forced sterilization in colonial public health contexts, integrated into a broader critique of biopolitics and Indigenous health sovereignty.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="pub-header reveal">
+      <p class="section-num">03</p>
+      <h2 class="section-heading">Publications</h2>
+    </div>
+
+    <div class="pub-entry reveal">
+      <div class="pub-date">2024</div>
+      <div>
+        <p class="pub-title-text">Reconciliation Capitalism</p>
+        <p class="pub-venue">Economic Anthropology</p>
+        <span class="pub-award-badge">✦ Harold K. Schneider Student Paper Prize</span>
+      </div>
+    </div>
+    <div class="pub-entry reveal">
+      <div class="pub-date">2023</div>
+      <div>
+        <p class="pub-title-text">Colonial Public Health, Eugenics, and Forced Sterilization</p>
+        <p class="pub-venue">History of Psychology</p>
+        <span class="pub-award-badge">✦ History of Psychology Association Paper of the Year</span>
+      </div>
+    </div>
+    <div class="pub-entry reveal">
+      <div class="pub-date">—</div>
+      <div>
+        <p class="pub-title-text">Methods in Medical Anthropology</p>
+        <p class="pub-venue">Ethnographic and mixed methods in medical anthropology contexts</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2.5rem; font-family:var(--mono); font-size:0.62rem; letter-spacing:0.1em; color:var(--earth-mid); text-transform:uppercase;" class="reveal">
+      Full list available in CV →
+    </p>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <div class="reveal">
+      <p class="section-num" style="color:rgba(242,237,228,0.4);">04</p>
+      <h2 class="cv-title">Curriculum<br>Vitae</h2>
+      <p class="cv-sub">Updated September 2025 · PDF</p>
+    </div>
+    <a href="/cv.pdf" class="btn-cv reveal" target="_blank" rel="noopener">Download PDF →</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <p class="section-num">05</p>
+      <h2 class="contact-heading">Let's<br>Correspond</h2>
+      <div class="contact-line">
+        <p class="contact-line-label">Institution</p>
+        <p class="contact-line-value">Stanford University<br>Department of Anthropology</p>
+      </div>
+      <div class="contact-line">
+        <p class="contact-line-label">Web</p>
+        <p class="contact-line-value">elliottreichardt.com</p>
+      </div>
+    </div>
+    <div class="contact-right reveal">
+      <p>I welcome correspondence from researchers, journalists, community members, and students interested in Indigenous governance, northern British Columbia, forestry politics, or reconciliation. Please reach out via my institutional email at Stanford.</p>
+      <p>I am also open to collaboration with First Nations communities, NGOs, and researchers working on land rights, resource governance, and decolonization in the Pacific Northwest and beyond.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Elliott Reichardt</span>
+    <span>Nak'azdli Territory · British Columbia</span>
+    <span>Stanford University</span>
+  </footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('up'), i * 90);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
