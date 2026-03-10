@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elliott Reichardt — Anthropologist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2G8222QXPV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2G8222QXPV');</script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f5f0e8;
+      --paper-dark: #ede5d5;
+      --ink: #1a1510;
+      --ink-faded: #6b5e4a;
+      --red: #8b2210;
+      --blue: #1a3a5c;
+      --khaki: #8b7355;
+      --moss: #3d5c3a;
+      --serif: 'Libre Baskerville', Georgia, serif;
+      --mono: 'Courier Prime', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    /* Subtle ruled lines like a field journal */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 27px,
+        rgba(26,21,16,0.04) 27px,
+        rgba(26,21,16,0.04) 28px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Red margin line */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; bottom: 0;
+      left: 3.5rem;
+      width: 1px;
+      background: rgba(139,34,16,0.15);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    * { position: relative; z-index: 2; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── HEADER ── */
+    header {
+      padding: 2.5rem 5rem 2.5rem 6rem;
+      border-bottom: 2px solid var(--ink);
+      display: flex; justify-content: space-between; align-items: baseline;
+      position: sticky; top: 0;
+      background: var(--paper);
+      z-index: 100;
+    }
+    .site-title {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+    }
+    .site-title strong { color: var(--ink); font-weight: 700; }
+    nav ul { display: flex; gap: 2rem; list-style: none; }
+    nav ul a {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faded);
+      border-bottom: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    nav ul a:hover { color: var(--red); border-color: var(--red); }
+
+    /* ── HERO ── */
+    #home {
+      padding: 5rem 5rem 5rem 6rem;
+      min-height: 90vh;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      border-bottom: 1px solid var(--ink);
+    }
+    .field-stamp {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+      opacity: 0.7;
+      margin-bottom: 1.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .field-stamp::before { content: ''; width: 28px; height: 1px; background: var(--red); display: block; }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+    h1 em { font-style: italic; font-weight: 400; color: var(--red); display: block; }
+    .hero-desc {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--ink-faded);
+      line-height: 1.85;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-nav-list { list-style: none; }
+    .hero-nav-list li {
+      border-top: 1px solid rgba(26,21,16,0.15);
+      padding: 0.65rem 0;
+    }
+    .hero-nav-list li:last-child { border-bottom: 1px solid rgba(26,21,16,0.15); }
+    .hero-nav-list a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      display: flex; justify-content: space-between; align-items: center;
+      transition: color 0.15s;
+    }
+    .hero-nav-list a:hover { color: var(--red); }
+    .hero-nav-list .arr { font-size: 0.85rem; }
+
+    .hero-right { position: relative; }
+    .hero-photo-frame {
+      position: relative;
+      border: 2px solid var(--ink);
+      padding: 0.5rem;
+      background: var(--paper-dark);
+    }
+    .hero-photo-frame::before {
+      content: 'Fig. 1 — Field portrait, Nak\'azdli Territory';
+      position: absolute;
+      bottom: -1.5rem;
+      left: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--ink-faded);
+      font-style: italic;
+      white-space: nowrap;
+    }
+    .hero-photo-frame img {
+      display: block;
+      width: 100%; height: 340px;
+      object-fit: cover; object-position: center 30%;
+      filter: sepia(20%) contrast(1.05);
+    }
+    /* Annotation marks */
+    .annotation {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--red);
+      font-style: italic;
+      opacity: 0.7;
+    }
+    .anno-1 { top: -1.5rem; right: 1rem; }
+    .anno-2 { bottom: 3rem; right: -4rem; width: 3.5rem; text-align: left; border-left: 1px solid var(--red); padding-left: 0.5rem; }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 5rem 5rem 5rem 6rem;
+      border-bottom: 1px solid rgba(26,21,16,0.2);
+    }
+    .section-header {
+      display: flex; align-items: baseline; gap: 1.5rem;
+      margin-bottom: 3.5rem;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1rem;
+    }
+    .sec-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faded);
+      letter-spacing: 0.1em;
+    }
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── ABOUT ── */
+    .about-cols { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
+    .about-sidebar { position: sticky; top: 6rem; }
+    .about-portrait-frame {
+      border: 2px solid var(--ink);
+      padding: 0.4rem;
+      background: var(--paper-dark);
+      margin-bottom: 1.5rem;
+    }
+    .about-portrait-frame img {
+      display: block; width: 100%;
+      height: 240px; object-fit: cover; object-position: center top;
+      filter: sepia(15%) contrast(1.05);
+    }
+    .about-portrait-caption {
+      font-family: var(--mono); font-size: 0.58rem;
+      color: var(--ink-faded); font-style: italic;
+      padding: 0.4rem 0.2rem 0.1rem;
+    }
+    .sidebar-box {
+      border: 1px solid rgba(26,21,16,0.2);
+      padding: 1.25rem;
+      background: var(--paper-dark);
+      margin-bottom: 1.5rem;
+    }
+    .sidebar-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(26,21,16,0.1);
+      padding-bottom: 0.5rem;
+    }
+    .sidebar-item {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--ink-faded);
+      margin-bottom: 0.3rem;
+    }
+    .about-text p { font-size: 0.97rem; line-height: 1.9; color: var(--ink-faded); margin-bottom: 1.1rem; }
+    .about-text p.lead { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); font-style: italic; }
+
+    /* ── RESEARCH ── */
+    .research-entries { }
+    .r-entry {
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 2.5rem; padding: 2rem 0;
+      border-top: 1px solid rgba(26,21,16,0.15);
+    }
+    .r-entry:last-child { border-bottom: 1px solid rgba(26,21,16,0.15); }
+    .r-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+      padding-top: 0.3rem;
+    }
+    .r-entry h3 { font-family: var(--serif); font-size: 1.15rem; font-style: italic; margin-bottom: 0.5rem; }
+    .r-entry p { font-size: 0.9rem; color: var(--ink-faded); line-height: 1.75; }
+    .r-badge {
+      display: inline-block; margin-top: 0.5rem;
+      font-family: var(--mono); font-size: 0.58rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--moss); color: white;
+      padding: 0.2rem 0.55rem;
+    }
+
+    /* ── PUBLICATIONS ── */
+    .pub-entries { }
+    .p-entry {
+      padding: 1.75rem 0;
+      border-top: 1px solid rgba(26,21,16,0.12);
+      display: grid; grid-template-columns: 60px 1fr;
+      gap: 1.75rem;
+    }
+    .p-entry:last-of-type { border-bottom: 1px solid rgba(26,21,16,0.12); }
+    .p-year {
+      font-family: var(--mono); font-size: 0.68rem;
+      color: var(--ink-faded); padding-top: 0.2rem; text-align: right;
+    }
+    .p-title { font-style: italic; line-height: 1.4; margin-bottom: 0.35rem; font-size: 1rem; }
+    .p-venue { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-faded); margin-bottom: 0.3rem; }
+    .p-award { font-family: var(--mono); font-size: 0.6rem; color: var(--red); }
+    .p-coauth { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-faded); font-style: italic; }
+    .p-status-tag {
+      display: inline-block; font-family: var(--mono); font-size: 0.58rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid var(--blue); color: var(--blue);
+      padding: 0.15rem 0.5rem; margin-right: 0.5rem;
+    }
+
+    /* ── TEACHING ── */
+    .t-rows { }
+    .t-row {
+      display: grid; grid-template-columns: 80px 140px 1fr;
+      gap: 2rem; padding: 1.25rem 0;
+      border-top: 1px solid rgba(26,21,16,0.1);
+      align-items: baseline;
+    }
+    .t-row:last-child { border-bottom: 1px solid rgba(26,21,16,0.1); }
+    .t-year { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faded); }
+    .t-role-tag {
+      font-family: var(--mono); font-size: 0.6rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--moss);
+    }
+    .t-course-name { font-style: italic; font-size: 0.95rem; }
+
+    /* ── CV ── */
+    #cv { background: var(--paper-dark); }
+    .cv-inner {
+      border: 2px solid var(--ink); padding: 3rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 3rem;
+    }
+    .cv-inner h2 { border: none; font-size: 2rem; }
+    .cv-meta { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-faded); margin-top: 0.5rem; line-height: 1.6; }
+    .cv-dl {
+      font-family: var(--mono); font-size: 0.7rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--paper); background: var(--ink);
+      padding: 1rem 2rem; white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .cv-dl:hover { opacity: 0.75; }
+
+    /* ── CONTACT ── */
+    .contact-cols { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
+    .c-info-block { margin-bottom: 2rem; }
+    .c-info-label {
+      font-family: var(--mono); font-size: 0.6rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-faded); border-bottom: 1px solid rgba(26,21,16,0.15);
+      padding-bottom: 0.35rem; margin-bottom: 0.6rem;
+    }
+    .c-info-val { font-style: italic; font-size: 1rem; }
+    .c-desc { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-faded); line-height: 1.8; margin-bottom: 1.5rem; }
+    form input, form textarea {
+      width: 100%;
+      background: var(--paper-dark);
+      border: 1px solid rgba(26,21,16,0.2);
+      border-left: 3px solid var(--ink);
+      font-family: var(--mono); font-size: 0.8rem;
+      color: var(--ink); padding: 0.75rem;
+      margin-bottom: 0.75rem; outline: none;
+      transition: border-color 0.15s;
+    }
+    form input:focus, form textarea:focus { border-color: var(--red); }
+    form textarea { height: 120px; resize: vertical; }
+    form button {
+      font-family: var(--mono); font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      background: var(--ink); color: var(--paper);
+      border: none; padding: 0.8rem 1.75rem; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    form button:hover { opacity: 0.75; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 5rem 2rem 6rem;
+      border-top: 2px solid var(--ink);
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 0.6rem;
+      letter-spacing: 0.1em; color: var(--ink-faded);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      body::after { display: none; }
+      header { padding: 1.5rem; flex-direction: column; gap: 1rem; }
+      nav ul { flex-wrap: wrap; gap: 1rem; }
+      #home { grid-template-columns: 1fr; padding: 3rem 1.5rem; min-height: auto; gap: 3rem; }
+      .about-cols, .contact-cols { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-sidebar { position: static; }
+      .section { padding: 3.5rem 1.5rem; }
+      .r-entry, .t-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .t-row { grid-template-columns: 60px 1fr; }
+      .t-role-tag { grid-column: 2; }
+      .t-course-name { grid-column: 2; }
+      .cv-inner { flex-direction: column; }
+      footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="site-title">
+      <strong>Elliott Reichardt</strong> — Field Notes & Research
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#cv">CV</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="home">
+    <div>
+      <p class="field-stamp">PhD Candidate · Stanford University · Anthropology</p>
+      <h1>Elliott<br><em>Reichardt</em></h1>
+      <p class="hero-desc">Sociocultural &amp; environmental anthropologist. Politics of land, health, and resource extraction in northern British Columbia — working alongside Dakelh First Nations communities.</p>
+      <ul class="hero-nav-list">
+        <li><a href="#about">About the Work <span class="arr">→</span></a></li>
+        <li><a href="#research">Research Projects <span class="arr">→</span></a></li>
+        <li><a href="#publications">Publications <span class="arr">→</span></a></li>
+        <li><a href="#teaching">Teaching <span class="arr">→</span></a></li>
+        <li><a href="cv.pdf" target="_blank">Download CV (PDF) <span class="arr">↓</span></a></li>
+        <li><a href="mailto:erei@stanford.edu">erei@stanford.edu <span class="arr">→</span></a></li>
+      </ul>
+    </div>
+    <div class="hero-right">
+      <span class="annotation anno-1">In the field, 2023</span>
+      <div class="hero-photo-frame">
+        <img src="photos/field-steppe.jpg" alt="Elliott Reichardt in the field" />
+      </div>
+      <span class="annotation anno-2">Central<br>Asia</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="section-header">
+      <span class="sec-num">§ 01</span>
+      <h2>About the Work</h2>
+    </div>
+    <div class="about-cols">
+      <div class="about-sidebar">
+        <div class="about-portrait-frame">
+          <img src="photos/portrait.jpg" alt="Elliott Reichardt" />
+          <p class="about-portrait-caption">Fig. 2 — Nak'azdli Territory, BC</p>
+        </div>
+        <div class="sidebar-box">
+          <p class="sidebar-label">Affiliation</p>
+          <p class="sidebar-item">Stanford University</p>
+          <p class="sidebar-item">Dept. of Anthropology</p>
+          <p class="sidebar-item" style="margin-top:0.5rem; color:#1a3a5c;">→ DePauw University, 2026</p>
+        </div>
+        <div class="sidebar-box">
+          <p class="sidebar-label">Fields</p>
+          <p class="sidebar-item">Environmental Anthropology</p>
+          <p class="sidebar-item">Indigenous Studies</p>
+          <p class="sidebar-item">Political Economy</p>
+          <p class="sidebar-item">Medical History</p>
+          <p class="sidebar-item">Colonial Public Health</p>
+        </div>
+        <div class="sidebar-box">
+          <p class="sidebar-label">Languages</p>
+          <p class="sidebar-item">English (native)</p>
+          <p class="sidebar-item">French (advanced)</p>
+          <p class="sidebar-item">Dakelh (beginner)</p>
+          <p class="sidebar-item">Hungarian (beginner)</p>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="lead">Studying the politics of land, health, and resource extraction in northern British Columbia — working alongside Dakelh First Nations communities.</p>
+        <p>My doctoral research focuses on the Nak'azdli Whut'en and Binche Whut'en peoples. Through sixteen months of ethnographic fieldwork with logging companies, hunters, elders, and forestry officials — complemented by archival, oral-historical, and GIS analyses — I trace how forestry transformed Dakelh forests into "log lands."</p>
+        <p>Working in genuine partnership with these communities, I co-designed the research questions, established oversight committees, and return annually to maintain accountability and reciprocity. Since 2023 I have helped coordinate the Binche Dakelh science summer camp.</p>
+        <p>My broader scholarly interests span environmental anthropology, Indigenous sovereignty, colonial law, public health, race, and eugenics. Earlier I trained as a biomedical researcher at the University of Calgary, studying immunology and cancer. In 2026 I join DePauw University as Assistant Professor of Anthropology.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research" class="section">
+    <div class="section-header">
+      <span class="sec-num">§ 02</span>
+      <h2>Research Projects</h2>
+    </div>
+    <div class="research-entries">
+      <div class="r-entry">
+        <p class="r-label">Book Project</p>
+        <div>
+          <h3>The Second Growth</h3>
+          <p>Examining Indigenous resurgence, settler adaptation, and the possibility of repair in the log lands of the Canadian North. Dissertation: <em>The Second Growth: Indigenous Resurgence, Settler Adaptation, and the Possibility of Repair in the Log Lands of the Canadian North.</em></p>
+        </div>
+      </div>
+      <div class="r-entry">
+        <p class="r-label">Chapter</p>
+        <div>
+          <h3>Legitimacy Without Liberalism</h3>
+          <p>How the Nak'azdli Whut'en govern mixed Indigenous-settler polities through infrastructure investment — splash parks, public goods, community services — outside liberal consent frameworks.</p>
+        </div>
+      </div>
+      <div class="r-entry">
+        <p class="r-label">Article</p>
+        <div>
+          <h3>Reconciliation Capitalism</h3>
+          <p>Theoretical framework analyzing how "reconciled logging practices" function as a mode of Indigenous resurgence — reclaiming territorial authority through, rather than simply against, resource capitalism.</p>
+          <span class="r-badge">Harold K. Schneider Prize 2025</span>
+        </div>
+      </div>
+      <div class="r-entry">
+        <p class="r-label">Historical</p>
+        <div>
+          <h3>Colonial Public Health &amp; Eugenics</h3>
+          <p>Historical research on race, eugenics, and forced sterilization in colonial public health contexts — integrating a broader critique of biopolitics and Indigenous health sovereignty.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications" class="section">
+    <div class="section-header">
+      <span class="sec-num">§ 03</span>
+      <h2>Publications</h2>
+    </div>
+    <div class="pub-entries">
+      <div class="p-entry">
+        <div class="p-year">Sub.</div>
+        <div>
+          <p class="p-title">"Reconciliation Capitalism: Settler Loggers in Dakelh-Governed Forests"</p>
+          <p class="p-venue"><span class="p-status-tag">Under Review</span> Current Anthropology (Invited)</p>
+        </div>
+      </div>
+      <div class="p-entry">
+        <div class="p-year">2027</div>
+        <div>
+          <p class="p-title">"What Futures for Canadian Anthropology / Quels futurs pour l'anthropologie canadienne?"</p>
+          <p class="p-venue"><span class="p-status-tag">Accepted</span> Anthropologica, winter 2027</p>
+          <p class="p-coauth">Editor, special issue: Réflexions sur la CASCA et l'anthropologie au Canada</p>
+        </div>
+      </div>
+      <div class="p-entry">
+        <div class="p-year">2023</div>
+        <div>
+          <p class="p-title">"'Mere Guesswork': Clarifying the Role of Intelligence, Mentality, and Psychometric Testing in the Diagnosis of 'Mental Defectives' for Sterilization in Alberta, 1929–1972"</p>
+          <p class="p-venue">History of Psychology 26(4): 283–313</p>
+          <p class="p-coauth">With Henderikus J. Stam and Kim Tan-MacNeill</p>
+          <p class="p-award">✦ Paper of the Year — Society for the History of Psychology, 2024</p>
+        </div>
+      </div>
+      <div class="p-entry">
+        <div class="p-year">2020</div>
+        <div>
+          <p class="p-title">"'To Awaken the Medical and Hygienic Conscience of the People': Cultivating Enlightened Citizenship through Free Public Healthcare in Haiti, 1915–34"</p>
+          <p class="p-venue">Medical History 64(1): 32–51</p>
+          <p class="p-award">✦ Stanford Anthropology Award for Outstanding Graduate Research, 2021</p>
+        </div>
+      </div>
+      <div class="p-entry">
+        <div class="p-year">2020</div>
+        <div>
+          <p class="p-title">"Glioma-Derived IL-33 Orchestrates an Inflammatory Brain Tumor Microenvironment That Accelerates Glioma Progression"</p>
+          <p class="p-venue">Nature Communications 11(1): 4997</p>
+          <p class="p-coauth">With De Boeck, Ahn, D'Mello, Lun, Menon, et al.</p>
+        </div>
+      </div>
+      <div class="p-entry">
+        <div class="p-year">2018</div>
+        <div>
+          <p class="p-title">"Relocating Obesity with Multiauthor Ethnography"</p>
+          <p class="p-venue">Medicine Anthropology Theory 5(5): 98–109</p>
+        </div>
+      </div>
+      <div class="p-entry">
+        <div class="p-year">2021</div>
+        <div>
+          <p class="p-title">"The Role of the Rockefeller Foundation in the Origins of Treponematosis Control in Haiti, 1915–1927"</p>
+          <p class="p-venue">Rockefeller Archive Center Research Reports</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching" class="section">
+    <div class="section-header">
+      <span class="sec-num">§ 04</span>
+      <h2>Teaching Experience</h2>
+    </div>
+    <div class="t-rows">
+      <div class="t-row">
+        <p class="t-year">2026</p>
+        <p class="t-role-tag">Instructor</p>
+        <p class="t-course-name">ANTHRO 127W: Forests: An Anthropological Approach</p>
+      </div>
+      <div class="t-row">
+        <p class="t-year">2025</p>
+        <p class="t-role-tag">Instructor</p>
+        <p class="t-course-name">ANTHRO 92A: Undergraduate Research Proposal Writing Workshop</p>
+      </div>
+      <div class="t-row">
+        <p class="t-year">2025</p>
+        <p class="t-role-tag">Instructor</p>
+        <p class="t-course-name">ANTHRO 310G: Introduction to Graduate Studies</p>
+      </div>
+      <div class="t-row">
+        <p class="t-year">2025</p>
+        <p class="t-role-tag">Co-Lead TA</p>
+        <p class="t-course-name">ANTHRO 41: Genes and Identity</p>
+      </div>
+      <div class="t-row">
+        <p class="t-year">2024</p>
+        <p class="t-role-tag">Lead TA</p>
+        <p class="t-course-name">ESS 166: Will Technology Save the World?: Environmental Ethics and Techno-Optimism</p>
+      </div>
+      <div class="t-row">
+        <p class="t-year">2021</p>
+        <p class="t-role-tag">Co-Lead TA</p>
+        <p class="t-course-name">ANTHRO 82: Medical Anthropology</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section id="cv" class="section">
+    <div class="section-header">
+      <span class="sec-num">§ 05</span>
+      <h2>Curriculum Vitae</h2>
+    </div>
+    <div class="cv-inner">
+      <div>
+        <h2 style="font-size:1.6rem; border:none;">Elliott Michael Reichardt</h2>
+        <p class="cv-meta">
+          PhD Candidate → Assistant Professor, DePauw University (2026)<br>
+          Stanford University, Department of Anthropology<br>
+          Updated 2026 · PDF
+        </p>
+      </div>
+      <a href="cv.pdf" class="cv-dl" target="_blank" rel="noopener">Download PDF ↓</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="section-header">
+      <span class="sec-num">§ 06</span>
+      <h2>Contact</h2>
+    </div>
+    <div class="contact-cols">
+      <div>
+        <p class="c-desc">I welcome correspondence from researchers, journalists, community members, and students interested in Indigenous governance, northern British Columbia, forestry politics, or reconciliation. I am also open to collaboration with First Nations communities, NGOs, and researchers working on land rights, resource governance, and decolonization.</p>
+        <div class="c-info-block">
+          <p class="c-info-label">Email</p>
+          <p class="c-info-val"><a href="mailto:erei@stanford.edu">erei@stanford.edu</a></p>
+        </div>
+        <div class="c-info-block">
+          <p class="c-info-label">Current Institution</p>
+          <p class="c-info-val">Stanford University<br>Department of Anthropology</p>
+        </div>
+        <div class="c-info-block">
+          <p class="c-info-label">Incoming 2026</p>
+          <p class="c-info-val">DePauw University<br>Assistant Professor of Anthropology</p>
+        </div>
+      </div>
+      <div>
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Your email" required />
+          <input type="text" name="subject" placeholder="Subject" />
+          <textarea name="message" placeholder="Your message" required></textarea>
+          <button type="submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Elliott Reichardt</span>
+    <span>Nak'azdli Territory · British Columbia</span>
+    <span>Stanford University</span>
+  </footer>
+
+</body>
+</html>
